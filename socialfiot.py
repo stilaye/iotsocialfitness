@@ -38,20 +38,19 @@ def social():
     return json.dumps(d), httplib.OK, HEADERS
 
 
-@app.route('/api/v1/user/data')
+@app.route('/api/v1/user/data', methods=['POST', 'GET'])
 def user_data():
-    return "Hello World!"
+    if request.method == 'POST':
+        data = request.json
+        database.update_user_data(data)
+        return jsonify(data)
 
 
 @app.route('/api/v1/sensor/data', methods=['POST', 'GET'])
 def sensor_data():
     if request.method == 'POST':
         data = request.json
-        data_dict = {'user': data['user'],
-                     'device_status': data["device_status"],
-                     'device_id': data["device_id"],
-                     'type': data["type"]}
-        database.insert(data_dict)
+        database.update_sensor_data(data)
         return jsonify(data)
 
 if __name__ == '__main__':

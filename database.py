@@ -12,5 +12,30 @@ db = db_client[db_name]
 db_collection = db["iot"]
 
 
-def insert(data):
-    db_collection.insert_one(data)
+def update_sensor_data(data):
+    db_collection.update(
+        {
+            "user": str(data['user'])
+        },
+        {
+            "$set": {
+                "device_status": data.get('device_status'),
+                "device_id": data.get("device_id"),
+                "type": data.get("type")
+            }
+        }, upsert=True)
+
+
+def update_user_data(data):
+    db_collection.update(
+        {
+            "user": str(data['user'])
+        },
+        {
+            "$set": {
+                "phone": data.get('phone'),
+                "email": data.get("email"),
+                "mac_address": data.get("mac_address"),
+                "user_location": data.get("location")
+            }
+        }, upsert=True)
