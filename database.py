@@ -12,12 +12,12 @@ db = db_client[db_name]
 machine_coll = db["machine"]
 users_coll = db["users"]
 
-_COFFE_POT = ["coffee_pot", "coffee pot", "coffee machine", "coffee_machine"]
+_COFFEE_POT = ["coffee_pot", "coffee pot", "coffee machine", "coffee_machine"]
 
 
 def update_sensor_data(data):
     device_type = data.get("type")
-    if device_type in _COFFE_POT:
+    if device_type in _COFFEE_POT:
         machine_coll.update(
             {
                 "user": str(data['user'])
@@ -56,3 +56,9 @@ def update_user_data(data):
                 "user_location": data.get("location")
             }
         }, upsert=True)
+
+
+def get_empty_coffee_machines():
+    cursor = machine_coll.find({"device_status": "not_empty"}, "user:1")
+    for res in cursor:
+        print res
