@@ -1,4 +1,5 @@
 from flask import Flask
+import rpi.GPIO
 app = Flask(__name__)
 
 
