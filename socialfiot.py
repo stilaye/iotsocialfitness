@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 import database
+import json
+import httplib
 
 app = Flask(__name__)
+HEADERS = {'Cache-Control': 'private, max-age=0, no-cache', 'Content-type': 'application/json'}
 
 
 @app.route('/status')
@@ -11,7 +14,27 @@ def status():
 
 @app.route('/api/v1/social')
 def social():
-    return "Hello World!"
+    d = {
+            "coffee_pot": [{
+                "name": "atrium",
+                "location": "atrium",
+                "device_status": "empty"
+            }],
+            "peoples": [{
+                "user": "sheshank kodam",
+                "phone": "617-750-4465",
+                "device_status": "empty",
+                "email": "sheshank.kodam@gmail.com",
+                "location": "room_name"
+            }, {
+                "user": "swapnil tilaye",
+                "phone": "617-750-7777",
+                "device_status": "empty",
+                "email": "swapnil.tilaye@gmail.com",
+                "location": "room_name"
+            }]
+        }
+    return json.dumps(d), httplib.OK, HEADERS
 
 
 @app.route('/api/v1/user/data')
@@ -23,7 +46,6 @@ def user_data():
 def sensor_data():
     if request.method == 'POST':
         data = request.json
-
         data_dict = {'user': data['user'],
                      'device_status': data["device_status"],
                      'device_id': data["device_id"],
