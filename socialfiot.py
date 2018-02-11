@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify
 import database
-import json
-import httplib
 
 app = Flask(__name__)
 HEADERS = {'Cache-Control': 'private, max-age=0, no-cache', 'Content-type': 'application/json'}
@@ -35,7 +33,7 @@ def social():
                 "location": "room_name"
             }]
         }
-    return json.dumps(d), httplib.OK, HEADERS
+    return jsonify(d),
 
 
 @app.route('/api/v1/user/data')
