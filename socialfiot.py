@@ -14,6 +14,7 @@ def status():
 
 @app.route('/api/v1/social')
 def social():
+    # get data from mongo here and return like the json below
     d = {
             "coffee_pot": [{
                 "name": "atrium",
