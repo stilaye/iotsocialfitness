@@ -26,7 +26,8 @@ def update_sensor_data(data):
                 "$set": {
                     "device_status": data.get('device_status'),
                     "device_id": data.get("device_id"),
-                    "type": data.get("type")
+                    "type": data.get("type"),
+                    "location": data.get("location")
                 }
             }, upsert=True)
     else:
@@ -49,7 +50,7 @@ def update_user_data(data):
             "user": str(data['user'])
         },
         {
-            "$setOnInsert": {
+            "$set": {
                 "phone": data.get('phone'),
                 "email": data.get("email"),
                 "mac_address": data.get("mac_address"),
@@ -59,6 +60,11 @@ def update_user_data(data):
 
 
 def get_empty_coffee_machines():
-    cursor = machine_coll.find({"device_status": "not_empty"}, "user:1")
+    cursor = machine_coll.find({"device_status": "not_empty"},
+                               {"_id": 0, "user": 1, "device_status": 1, "device_id": 1, "location": 1})
+    empty_machines = []
     for res in cursor:
-        print res
+        empty_machines.append(res)
+        return empty_machines
+
+

@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify
 import database
-import json
-import httplib
 
 app = Flask(__name__)
 HEADERS = {'Cache-Control': 'private, max-age=0, no-cache', 'Content-type': 'application/json'}
@@ -15,8 +13,28 @@ def status():
 @app.route('/api/v1/social')
 def social():
     # get data from mongo here and return like the json below
-    database.get_empty_coffee_machines()
-    return "hello"
+    # empty_coffee_machine = database.get_empty_coffee_machines()
+    d = {
+        "coffee_pot": [{
+            "name": "atrium",
+            "location": "atrium",
+            "device_status": "empty"
+        }],
+        "peoples": [{
+            "user": "sheshank kodam",
+            "phone": "617-750-4465",
+            "device_status": "empty",
+            "email": "sheshank.kodam@gmail.com",
+            "location": "room_name"
+        }, {
+            "user": "swapnil tilaye",
+            "phone": "617-750-7777",
+            "device_status": "empty",
+            "email": "swapnil.tilaye@gmail.com",
+            "location": "room_name"
+        }]
+    }
+    return jsonify(d)
 
 
 @app.route('/api/v1/user/data', methods=['POST', 'GET'])
