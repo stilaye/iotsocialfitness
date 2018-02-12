@@ -57,7 +57,7 @@ def update_user_data(data):
                 "user_location": data.get("location"),
                 "name": str(data.get('name')),
                 "interests": data.get("interests")            
-                }
+            }
         }, upsert=True)
 
 
