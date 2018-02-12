@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import database
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 HEADERS = {'Cache-Control': 'private, max-age=0, no-cache', 'Content-type': 'application/json'}
@@ -34,6 +35,12 @@ def sensor_data():
         data = request.json
         database.update_sensor_data(data)
         return jsonify(data)
+
+
+@app.route('/api/v1/location', methods=['GET'])
+def user_location():
+    user = request.args.get('user')
+    return jsonify(database.get_user_location(user))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=2001)

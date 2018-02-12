@@ -77,3 +77,9 @@ def get_users_empty_devices():
     for res in cursor:
         users.append(res)
     return users
+
+
+def get_user_location(user):
+    cursor = users_coll.find_one({"user": user},
+                                 {"_id": 0, "user_location": 1})
+    return cursor["user_location"]
