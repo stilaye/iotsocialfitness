@@ -15,7 +15,7 @@ def status():
 def social():
     # get data from mongo here and return like the json below
     res = {
-        "coffee_pots": database.get_empty_coffee_machines(),
+        "coffee_pots": database.get_coffee_machines(),
         "users": database.get_users_empty_devices()
     }
     return jsonify(res)
