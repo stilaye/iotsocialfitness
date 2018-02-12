@@ -40,7 +40,13 @@ def sensor_data():
 @app.route('/api/v1/location', methods=['GET'])
 def user_location():
     user = request.args.get('user')
-    return jsonify(database.get_user_location(user))
+    return jsonify(database.location(user))
+
+
+@app.route('/api/v1/users/nearby', methods=['GET'])
+def user_nearby_location():
+    loc = request.args.get('location')
+    return jsonify(database.users_nearby(loc))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=2001)

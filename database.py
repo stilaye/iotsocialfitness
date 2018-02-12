@@ -79,7 +79,16 @@ def get_users_empty_devices():
     return users
 
 
-def get_user_location(user):
+def location(user):
     cursor = users_coll.find_one({"user": user},
                                  {"_id": 0, "user_location": 1})
     return cursor["user_location"]
+
+
+def users_nearby(loc):
+    cursor = users_coll.find({"user_location": loc},
+                             {"_id": 0, "user": 1, "phone": 1, "email": 1, "name": 1, "user_location": 1})
+    users = []
+    for res in cursor:
+        users.append(res)
+    return users
