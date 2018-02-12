@@ -13,28 +13,11 @@ def status():
 @app.route('/api/v1/social')
 def social():
     # get data from mongo here and return like the json below
-    # empty_coffee_machine = database.get_empty_coffee_machines()
-    d = {
-            "coffee_pot": [{
-                "name": "atrium",
-                "location": "atrium",
-                "device_status": "empty"
-            }],
-            "peoples": [{
-                "user": "sheshank kodam",
-                "phone": "617-750-4465",
-                "device_status": "empty",
-                "email": "sheshank.kodam@gmail.com",
-                "location": "room_name"
-            }, {
-                "user": "swapnil tilaye",
-                "phone": "617-750-7777",
-                "device_status": "empty",
-                "email": "swapnil.tilaye@gmail.com",
-                "location": "room_name"
-            }]
-        }
-    return jsonify(d),
+    res = {
+        "coffee_pots": database.get_empty_coffee_machines(),
+        "users": database.get_users_empty_devices()
+    }
+    return jsonify(res)
 
 
 @app.route('/api/v1/user/data', methods=['POST', 'GET'])
