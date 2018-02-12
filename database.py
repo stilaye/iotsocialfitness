@@ -60,9 +60,8 @@ def update_user_data(data):
         }, upsert=True)
 
 
-def get_empty_coffee_machines():
-    cursor = machine_coll.find({"device_status": "empty"},
-                               {"_id": 0, "user": 1, "device_status": 1, "device_id": 1, "location": 1})
+def get_coffee_machines():
+    cursor = machine_coll.find({},{"_id": 0, "user": 1, "device_status": 1, "device_id": 1, "location": 1})
     empty_machines = []
     for res in cursor:
         empty_machines.append(res)
