@@ -56,6 +56,7 @@ def update_user_data(data):
                 "mac_address": data.get("mac_address"),
                 "user_location": data.get("location"),
                 "name": str(data.get('name')),
+                "interests": str(data.get('interests')),
             }
         }, upsert=True)
 
@@ -71,7 +72,7 @@ def get_coffee_machines():
 def get_users_empty_devices():
     cursor = users_coll.find({"device_status": "empty"},
                              {"_id": 0, "user": 1, "device_status": 1, "phone": 1, "email": 1, "name": 1,
-                              "user_location": 1})
+                              "user_location": 1, "interests": 1})
     users = []
     for res in cursor:
         users.append(res)
@@ -86,7 +87,8 @@ def location(user):
 
 def users_nearby(loc):
     cursor = users_coll.find({"user_location": loc},
-                             {"_id": 0, "user": 1, "phone": 1, "email": 1, "name": 1, "user_location": 1})
+                             {"_id": 0, "user": 1, "phone": 1, "email": 1, "name": 1, "user_location": 1,
+                              "interests": 1})
     users = []
     for res in cursor:
         users.append(res)
